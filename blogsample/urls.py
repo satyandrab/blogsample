@@ -7,9 +7,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
-#     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^blogs/$', blog_list),
+    url(r'^$', blog_list),
     url(r'^blog/(?P<pk>[0-9]+)/$', blog_detail),
 )
 

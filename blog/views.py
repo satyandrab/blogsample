@@ -3,13 +3,14 @@ from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.decorators import login_required
 
-# Serializers define the API representation.
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields = ('title', 'body', 'category')
 
+@login_required(login_url='/api-auth/login/')
 @api_view(['GET', 'POST'])
 def blog_list(request):
     """
@@ -26,7 +27,8 @@ def blog_list(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+@login_required(login_url='/api-auth/login/')
 @api_view(['GET', 'PUT', 'DELETE'])
 def blog_detail(request, pk):
     """
